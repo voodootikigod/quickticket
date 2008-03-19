@@ -1,0 +1,8 @@
+QuickTicket
+===========
+
+QuickTicket is a Rails plugin that utilizes the Lighthouse API to provide ticket
+creation within a Rails application. This will create a little icon on the
+bottom right of the application screen (which scrolls) that will display a pane
+when clicked. This will allow the user to provide their comments/issues/bug into 
+the pane which is then submitted to your Lighthouse account for the project.
