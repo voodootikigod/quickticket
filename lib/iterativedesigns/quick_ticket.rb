@@ -133,7 +133,7 @@ code = <<-HTML
 		<a href="javascript:void(0);" onclick="QuickTicket.toggle('hide')">close</a>
 	</div>
 	
-	<form action="#{url_for(:controller="quick_tickets", :action=>"create")}" method="GET">
+	<form action="#{url_for(:controller=>"quick_tickets", :action=>"create")}" method="GET">
 		<h2>Create a ticket#{ "for "+site_name unless site_name.blank?}</h2>
 		<div id="lighthouse_ticket_title" class="field">
 			<label>Title</label>
