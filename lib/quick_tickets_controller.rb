@@ -18,6 +18,8 @@ class QuickTicketsController < ActionController::Base
       
       body += "\n\nCreated from the web by #{current_user.name}"
       body += "\nURL: #{params[:url]}"
+      Lighthouse.account = IterativeDesigns::QuickTicket.account
+      Lighthouse.token   = IterativeDesigns::QuickTicket.token
       ticket = Lighthouse::Ticket.new(:project_id => IterativeDesigns::QuickTicket.project, :title=>params[:title], :body=>body)
       ticket.tags << "WebTicket"
       if ticket.save
