@@ -30,3 +30,10 @@ IterativeDesigns::QuickTicket::site_name = "SPECIAL_SITE.com"
 IterativeDesigns::QuickTicket::environments = ['development']	
 # The environments you want your QuickTicket to show up in, list as many or 
 # as few as you want.
+
+
+You will also have to add this line to your routes.rb file. This requirement
+will hopefully be removed someday, but for right now it is the easiest way to 
+get things to work
+
+map.create_ticket 'create_ticket', :controller=>"quick_tickets", :action=>"create"
