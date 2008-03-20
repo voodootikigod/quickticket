@@ -164,17 +164,6 @@ module Lighthouse
       end
   end
   
-  class Message < Base
-    site_format << '/projects/:project_id'
-  end
-  
-  class Milestone < Base
-    site_format << '/projects/:project_id'
-  end
-  
-  class Bin < Base
-    site_format << '/projects/:project_id'
-  end
 end
 
 module ActiveResource
