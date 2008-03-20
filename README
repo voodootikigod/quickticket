@@ -6,3 +6,17 @@ creation within a Rails application. This will create a little icon on the
 bottom right of the application screen (which scrolls) that will display a pane
 when clicked. This will allow the user to provide their comments/issues/bug into 
 the pane which is then submitted to your Lighthouse account for the project.
+
+How to use
+==========
+
+Once you have the plugin installed, you will have to add the following settings 
+into your environment.rb file. This will allow the plugin to connect to your 
+Lighthouse account and load tickets only in the environments you specify.
+
+
+IterativeDesigns::QuickTicket.account = "iterativedesigns"		#replace with your account name (first part of the domain name for Lighthouse)
+IterativeDesigns::QuickTicket::token   = "YOUR LIGHTHOUSE GENERATED TOKEN"
+IterativeDesigns::QuickTicket::project = 1234					#you can find this through your URL
+IterativeDesigns::QuickTicket::site_name = "SPECIAL_SITE.com"	#the name of your application to make it feel localized, leave blank if you don't care.
+IterativeDesigns::QuickTicket::environments = ['development']	#the environments you want your QuickTicket to show up in, list as many or as few as you want.
