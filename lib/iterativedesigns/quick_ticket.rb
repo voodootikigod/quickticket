@@ -175,22 +175,11 @@ code = <<-HTML
       HTML
       
       str = javascript
-      str += style #if with_style
+      str += style if @@with_style
       str += code
       str
     end
   end
   
-  
-  class << self
-      # Adds routes to your application necessary for the plugin to function correctly.
-      # Simply add the following inside your Routes.draw block in routes.rb:
-      #   UJS::routes
-      # This is now *mandatory*.
-      def routes
-        ActionController::Routing::Routes.add_route "/quick_ticket", :controller => "quick_tickets", :action => "create"
-      end
-
-    end
   
 end
