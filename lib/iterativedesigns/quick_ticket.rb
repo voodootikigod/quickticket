@@ -13,24 +13,6 @@ module IterativeDesigns # :nodoc:
     end
     
     
-    def create_ticket
-      if not params[:body].blank? and not params[:title].blank?
-        body = params[:body]
-        if responds_to?(current_user)
-          body += "\n\nCreated from the web by #{current_user.login}"
-        end
-        body += "\nURL: #{params[:url]}"
-        ticket = Lighthouse::Ticket.new(:project_id => IterativeDesigns::QuickTicket.project, :title=>params[:title], :body=>body)
-        ticket.tags << "WebTicket"
-        if ticket.save
-          flash[:notice]="Your ticket was successfully posted, we will try to fix it."
-        end
-      end 
-      respond_to do |format|
-        format.html { redirect_back_or_default("/") }
-        format.js  { render :action=>"create.js.rjs" }
-      end
-    end
   end
 
   class QuickTicket

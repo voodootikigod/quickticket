@@ -11,12 +11,14 @@ class QuickTicketsController < ActionController::Base
   end
   
   def create 
+    redirect_back_or_default("/") and return unless IterativeDesigns::QuickTicket.enabled?
+    
     if not params[:body].blank? and not params[:title].blank?
       body = params[:body]
       
       body += "\n\nCreated from the web by #{current_user.name}"
       body += "\nURL: #{params[:url]}"
-      ticket = Lighthouse::Ticket.new(:project_id => QuickTicket.project, :title=>params[:title], :body=>body)
+      ticket = Lighthouse::Ticket.new(:project_id => IterativeDesigns::QuickTicket.project, :title=>params[:title], :body=>body)
       ticket.tags << "WebTicket"
       if ticket.save
         flash[:notice]="Your ticket was successfully posted, we will try to fix it."
@@ -26,7 +28,12 @@ class QuickTicketsController < ActionController::Base
     end 
     respond_to do |format|
       format.html { redirect_back_or_default("/") }
-      format.js  { render :action=>"create.js.rjs" }
+      format.js  { 
+        render :update do |page| 
+          page << "QuickTicket.toggle('hide');"
+          page.alert(flash[:notice]) unless flash[:notice].blank?
+        end
+      }
     end
   end
   
