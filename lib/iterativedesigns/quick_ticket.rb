@@ -132,14 +132,14 @@ code = <<-HTML
 	<div style="float:right">
 		<a href="javascript:void(0);" onclick="QuickTicket.toggle('hide')">close</a>
 	</div>
-	
-	<form action="#{url_for(:controller=>"quick_tickets", :action=>"create")}" method="GET">
+
+	<form action="/create_ticket" method="GET">
 		<h2>Create a ticket#{ "for "+site_name unless site_name.blank?}</h2>
 		<div id="lighthouse_ticket_title" class="field">
 			<label>Title</label>
 			<input type="text" id="lighthouse_ticket_title_field" name="title" />
 		</div>
-		<input type="hidden" name="url" value="<%= request.request_uri -%>"/>
+		<input type="hidden" name="url" value="#{request.request_uri}"/>
 		
 		<div id="lighthouse_ticket_body" class="field">
 			<label>Body</label>
