@@ -90,9 +90,8 @@ div#create_ticket_form .field textarea	{
 	width: 500px;
 }
 
-div#create_ticket_form input.submit_button	{
+div#create_ticket_form div#submit_ticket	{
 	margin:8px 0px;
-	text-align:right;
 }
 div#create_ticket_form h2	{
 	padding:0px;
@@ -126,7 +125,7 @@ HTML
 
 code = <<-HTML
 <div id="bug_button">
-			<a href="javascript:void(0);" onclick="QuickTicket.toggle('show')">Report Issue</a>
+			<a href="javascript:void(0);" onclick="QuickTicket.toggle('show')"><span>Report Issue</span></a>
 		</div>
 <div id="create_ticket_form" style="display:none">
 	<div style="float:right">
@@ -134,12 +133,13 @@ code = <<-HTML
 	</div>
 
 	<form action="/create_ticket" method="GET">
-		<h2>Create a ticket#{ "for "+site_name unless site_name.blank?}</h2>
+	  
+		<input type="hidden" name="url" value="#{request.request_uri}"/>
+		<h2>Create a ticket#{ " for "+site_name unless site_name.blank?}</h2>
 		<div id="lighthouse_ticket_title" class="field">
 			<label>Title</label>
 			<input type="text" id="lighthouse_ticket_title_field" name="title" />
 		</div>
-		<input type="hidden" name="url" value="#{request.request_uri}"/>
 		
 		<div id="lighthouse_ticket_body" class="field">
 			<label>Body</label>
