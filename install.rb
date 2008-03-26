@@ -40,8 +40,8 @@ IterativeDesigns::QuickTicket.environments = ['production']
 
 VALUES
 
-File.open(File.dirname(__FILE__) + "/../../../config/environment.rb","w") do |environment_rb|
-  environment_rb.puts default_values
+File.open(File.dirname(__FILE__) + "/../../../config/environment.rb", File::WRONLY | File::APPEND) do |environment_rb|
+  environment_rb << default_values
 end
 
 puts IO.read(File.join(File.dirname(__FILE__), 'README'))

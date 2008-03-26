@@ -1,39 +1,14 @@
 QuickTicket
 ===========
 
-QuickTicket is a Rails plugin that utilizes the Lighthouse API to provide ticket
-creation within a Rails application. This will create a little icon on the
-bottom right of the application screen (which scrolls) that will display a pane
-when clicked. This will allow the user to provide their comments/issues/bug into 
-the pane which is then submitted to your Lighthouse account for the project.
+QuickTicket is a Rails plugin that utilizes the Lighthouse API to provide ticket creation within a Rails application. This will create a little icon on the bottom right of the application screen (which scrolls) that will display a pane when clicked. This will allow the user to provide their comments/issues/bug into  the pane which is then submitted to your Lighthouse account for the project.
 
 How to use
 ==========
 
-Once you have the plugin installed, you will have to add the following settings 
-into your environment.rb file. This will allow the plugin to connect to your 
-Lighthouse account and load tickets only in the environments you specify.
+Once you have the plugin installed, you will find the following two new assets created into your application
 
+* ./public/stylesheets/quickticket.css - This holds the default (and configurable) styling for the application, update it as you see fit or configure it not to be loaded.
+* ./public/javascripts/quickticket.js  - This holds the necessary javascript, written to work with the Prototype library. You can enhance or modify it (switch to jQuery) but keep the namespace and methods the same.
 
-IterativeDesigns::QuickTicket.account = "iterativedesigns"		
-#replace with your account name (first part of the domain name for Lighthouse)
-
-IterativeDesigns::QuickTicket::token   = "YOUR LIGHTHOUSE GENERATED TOKEN"
-
-IterativeDesigns::QuickTicket::project = 1234					
-# You can find this through your URL
-
-IterativeDesigns::QuickTicket::site_name = "SPECIAL_SITE.com"	
-# The name of your application to make it feel localized, leave blank if you 
-# don't care.
-
-IterativeDesigns::QuickTicket::environments = ['development']	
-# The environments you want your QuickTicket to show up in, list as many or 
-# as few as you want.
-
-
-You will also have to add this line to your routes.rb file. This requirement
-will hopefully be removed someday, but for right now it is the easiest way to 
-get things to work
-
-map.create_ticket 'create_ticket', :controller=>"quick_tickets", :action=>"create"
+Also new parameters have been added to your environment.rb file which will allow you to configure QuickTicket. You should probably go update those now, otherwise it will act like its working, but fail.
