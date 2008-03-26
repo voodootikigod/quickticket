@@ -1,0 +1,45 @@
+div#bug_button	{
+	position:fixed;
+	bottom:20px;
+	right:20px;
+}
+
+div#create_ticket_form .field textarea	{
+	height:60px;
+}
+div#create_ticket_form .field input,
+div#create_ticket_form .field textarea	{
+	
+	width: 500px;
+}
+
+div#create_ticket_form div#submit_ticket	{
+	margin:8px 0px;
+}
+div#create_ticket_form h2	{
+	padding:0px;
+	margin:8px 0px;
+}
+
+div#create_ticket_form label	{
+	font-size:12px;
+	font-weight:bold;
+	display:block;
+	margin:6px 0px;
+}
+div#create_ticket_form	form {
+	text-align:left;
+	width:500px;
+	margin:0px auto
+}
+
+div#create_ticket_form	{
+	position:fixed;
+	bottom:0px;
+	height:210px;
+	left:0px;
+	right:0px;
+	padding:8px;
+	border-top:3px solid #bababa;
+	background:#ccc;
+}

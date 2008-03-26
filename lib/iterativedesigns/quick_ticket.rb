@@ -51,109 +51,44 @@ module IterativeDesigns # :nodoc:
     def self.ticket_pane(request = nil)
       
       javascript = <<-HTML
+  		<script src="/javascripts/quickticket.js" type="text/javascript"></script>
+      HTML
 
+      style = <<-HTML  
+      <link href="/stylesheets/quickticket.css" media="screen" rel="stylesheet" type="text/css" />
+      HTML
 
-<script type="text/javascript">
-// <![CDATA[
-var QuickTicket = {
-  toggle:function(invoke_action)	{
-		if (invoke_action == "show")	{
-			$('create_ticket_form').show();
-			$('lighthouse_ticket_title_field').value="";
-			$('lighthouse_ticket_body_field').value="";
-			$('submitting_ticket').hide();
-			$('submit_ticket').show();
-		} else	{
-			$('create_ticket_form').hide();
-		}
-	}
-}
-
-// ]]>
-</script>
-HTML
-
-style = <<-HTML  
-<style type="text/css" media="screen">
-div#bug_button	{
-	position:fixed;
-	bottom:20px;
-	right:20px;
-}
-
-div#create_ticket_form .field textarea	{
-	height:60px;
-}
-div#create_ticket_form .field input,
-div#create_ticket_form .field textarea	{
-	
-	width: 500px;
-}
-
-div#create_ticket_form div#submit_ticket	{
-	margin:8px 0px;
-}
-div#create_ticket_form h2	{
-	padding:0px;
-	margin:8px 0px;
-}
-
-div#create_ticket_form label	{
-	font-size:12px;
-	font-weight:bold;
-	display:block;
-	margin:6px 0px;
-}
-div#create_ticket_form	form {
-	text-align:left;
-	width:500px;
-	margin:0px auto
-}
-
-div#create_ticket_form	{
-	position:fixed;
-	bottom:0px;
-	height:210px;
-	left:0px;
-	right:0px;
-	padding:8px;
-	border-top:3px solid #bababa;
-	background:#ccc;
-}
-</style>
-HTML
-
-code = <<-HTML
-<div id="bug_button">
+      code = <<-HTML
+    <div id="bug_button">
 			<a href="javascript:void(0);" onclick="QuickTicket.toggle('show')"><span>Report Issue</span></a>
 		</div>
-<div id="create_ticket_form" style="display:none">
-	<div style="float:right">
-		<a href="javascript:void(0);" onclick="QuickTicket.toggle('hide')">close</a>
-	</div>
+    <div id="create_ticket_form" style="display:none">
+    	<div style="float:right">
+    		<a href="javascript:void(0);" onclick="QuickTicket.toggle('hide')">close</a>
+    	</div>
 
-	<form action="/create_ticket" method="GET">
+    	<form action="/create_ticket" method="GET">
 	  
-		<input type="hidden" name="url" value="#{request.request_uri}"/>
-		<h2>Create a ticket#{ " for "+site_name unless site_name.blank?}</h2>
-		<div id="lighthouse_ticket_title" class="field">
-			<label>Title</label>
-			<input type="text" id="lighthouse_ticket_title_field" name="title" />
-		</div>
+    		<input type="hidden" name="url" value="#{request.request_uri}"/>
+    		<h2>Create a ticket#{ " for "+site_name unless site_name.blank?}</h2>
+    		<div id="lighthouse_ticket_title" class="field">
+    			<label>Title</label>
+    			<input type="text" id="lighthouse_ticket_title_field" name="title" />
+    		</div>
 		
-		<div id="lighthouse_ticket_body" class="field">
-			<label>Body</label>
-			<textarea name="body" id="lighthouse_ticket_body_field"></textarea>
-		</div>
-		<div id="submitting_ticket" style="display:none">
-			Submitting ticket...
-		</div>
-		<div id="submit_ticket">
-		<input type="submit" class="submit_button" value="Register Ticket"/> or 
-			<a href="javascript:void(0);" onclick="QuickTicket.toggle('hide')">Cancel</a>
-		</div>
-	</form>
-</div>
+    		<div id="lighthouse_ticket_body" class="field">
+    			<label>Body</label>
+    			<textarea name="body" id="lighthouse_ticket_body_field"></textarea>
+    		</div>
+    		<div id="submitting_ticket" style="display:none">
+    			Submitting ticket...
+    		</div>
+    		<div id="submit_ticket">
+    		<input type="submit" class="submit_button" value="Register Ticket"/> or 
+    			<a href="javascript:void(0);" onclick="QuickTicket.toggle('hide')">Cancel</a>
+    		</div>
+    	</form>
+    </div>
       HTML
       
       str = javascript
