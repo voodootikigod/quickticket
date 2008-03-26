@@ -44,4 +44,4 @@ File.open(File.dirname(__FILE__) + "/../../../config/environment.rb", File::WRON
   environment_rb << default_values
 end
 
-puts IO.read(File.join(File.dirname(__FILE__), 'README'))
+puts IO.read(File.join(File.dirname(__FILE__), 'README.markdown'))
