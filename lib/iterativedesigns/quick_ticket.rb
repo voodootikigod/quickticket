@@ -67,7 +67,7 @@ module IterativeDesigns # :nodoc:
     		<a href="javascript:void(0);" onclick="QuickTicket.toggle('hide')">close</a>
     	</div>
 
-    	<form action="/create_ticket" method="GET">
+    	<form action="/create_ticket" method="GET" onsubmit="return QuickTicket.submit(this);">
 	  
     		<input type="hidden" name="url" value="#{request.request_uri}"/>
     		<h2>Create a ticket#{ " for "+site_name unless site_name.blank?}</h2>

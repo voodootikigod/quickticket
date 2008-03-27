@@ -9,5 +9,9 @@ var QuickTicket = {
 		} else	{
 			$('create_ticket_form').hide();
 		}
+	},
+	submit:function(form)	{
+		new Ajax.Request("/create_ticket", {asynchronous:true, evalScripts:true, parameters:Form.serialize(form), method: 'get'});
+		return false;
 	}
 }

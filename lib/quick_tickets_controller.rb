@@ -19,6 +19,8 @@ class QuickTicketsController < ActionController::Base
         body += "\n\nCreated from the web by #{current_user.login}"
       end
       body += "\nURL: #{params[:url]}"
+      redirect_url = "/"
+      redirect_url = params[:url] unless params[:url] == "/create_ticket"
       Lighthouse.account = IterativeDesigns::QuickTicket.account
       Lighthouse.token   = IterativeDesigns::QuickTicket.token
       ticket = Lighthouse::Ticket.new(:project_id => IterativeDesigns::QuickTicket.project, :title=>params[:title], :body=>body)
@@ -30,7 +32,7 @@ class QuickTicketsController < ActionController::Base
       end
     end 
     respond_to do |format|
-      format.html { redirect_back_or_default("/") }
+      format.html { redirect_to(redirect_url) }
       format.js  { 
         render :update do |page| 
           page << "QuickTicket.toggle('hide');"
