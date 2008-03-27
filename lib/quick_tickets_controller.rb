@@ -15,8 +15,9 @@ class QuickTicketsController < ActionController::Base
     
     if not params[:body].blank? and not params[:title].blank?
       body = params[:body]
-      
-      body += "\n\nCreated from the web by #{current_user.name}"
+      if self.respond_to?(:logged_in?) and logged_in?
+        body += "\n\nCreated from the web by #{current_user.login}"
+      end
       body += "\nURL: #{params[:url]}"
       Lighthouse.account = IterativeDesigns::QuickTicket.account
       Lighthouse.token   = IterativeDesigns::QuickTicket.token
