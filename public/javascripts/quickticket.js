@@ -13,5 +13,9 @@ var QuickTicket = {
 	submit:function(form)	{
 		new Ajax.Request("/create_ticket", {asynchronous:true, evalScripts:true, parameters:Form.serialize(form), method: 'get'});
 		return false;
+	}, 
+	notify:function(message)	{
+		alert(message);
 	}
+
 }

@@ -36,7 +36,8 @@ class QuickTicketsController < ActionController::Base
       format.js  { 
         render :update do |page| 
           page << "QuickTicket.toggle('hide');"
-          page.alert(flash[:notice]) unless flash[:notice].blank?
+          page << "QuickTicket.notify('#{flash[:notice]}')"
+          flash[:notice] = nil
         end
       }
     end

@@ -59,7 +59,7 @@ module Lighthouse
   
   self.host_format   = '%s://%s%s'
   self.domain_format = '%s.lighthouseapp.com'
-  self.protocol      = 'http'
+  self.protocol      = 'https'
   self.port          = ''
 
   class Base < ActiveResource::Base
