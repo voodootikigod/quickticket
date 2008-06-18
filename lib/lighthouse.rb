@@ -61,7 +61,7 @@ module Lighthouse
   self.protocol      = 'http'
   self.port          = ''
  
-  class Base < ActiveResource::Base
+  class LighthouseBase < ActiveResource::Base
     def self.inherited(base)
       Lighthouse.resources << base
       class << base
@@ -95,7 +95,7 @@ module Lighthouse
   #   project = Lighthouse::Project.find(44)
   #   project.tickets
   #
-  class Project < Base
+  class LighthouseProject < LighthouseBase
     def tickets(options = {})
       Ticket.find(:all, :params => options.update(:project_id => id))
     end
@@ -117,20 +117,20 @@ module Lighthouse
     end
   end
  
-  class User < Base
+  class LighthouseUser < LighthouseBase
     def memberships
       Membership.find(:all, :params => {:user_id => id})
     end
   end
   
-  class Membership < Base
+  class LighthouseMembership < LighthouseBase
     site_format << '/users/:user_id'
     def save
       raise Error, "Cannot modify Memberships from the API"
     end
   end
   
-  class Token < Base
+  class LighthouseToken < LighthouseBase
     def save
       raise Error, "Cannot modify Tokens from the API"
     end
@@ -160,7 +160,7 @@ module Lighthouse
   #  ticket.tags.delete '@high'
   #  ticket.save
   #
-  class Ticket < Base
+  class LighthouseTicket < LighthouseBase
     attr_writer :tags
     site_format << '/projects/:project_id'
  
@@ -214,23 +214,23 @@ module Lighthouse
       end
   end
   
-  class Message < Base
+  class LighthouseMessage < LighthouseBase
     site_format << '/projects/:project_id'
   end
   
-  class Milestone < Base
+  class LighthouseMilestone < LighthouseBase
     site_format << '/projects/:project_id'
   end
   
-  class Bin < Base
+  class LighthouseBin < LighthouseBase
     site_format << '/projects/:project_id'
   end
   
-  class Changeset < Base
+  class LighthouseChangeset < LighthouseBase
     site_format << '/projects/:project_id'
   end
   
-  class Change < Array; end
+  class LighthouseChange < Array; end
 end
  
 module ActiveResource
