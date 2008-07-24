@@ -4,6 +4,7 @@ div#bug_button	{
 	right:20px;
 }
 
+div#create_ticket_form .field	{ margin:8px 0px;}
 div#create_ticket_form .field textarea	{
 	height:60px;
 }
@@ -27,6 +28,11 @@ div#create_ticket_form label	{
 	display:block;
 	margin:6px 0px;
 }
+
+
+div#create_ticket_form label.inline	{
+	display:inline;
+}
 div#create_ticket_form	form {
 	text-align:left;
 	width:500px;
@@ -36,7 +42,7 @@ div#create_ticket_form	form {
 div#create_ticket_form	{
 	position:fixed;
 	bottom:0px;
-	height:210px;
+	height:270px;
 	left:0px;
 	right:0px;
 	padding:8px;
