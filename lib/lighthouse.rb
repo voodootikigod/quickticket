@@ -1,8 +1,7 @@
-$LOAD_PATH << File.join(File.dirname(__FILE__), '../vendor/activesupport/lib')
-$LOAD_PATH << File.join(File.dirname(__FILE__), '../vendor/activeresource/lib')
-require 'active_support'
-require 'active_resource'
-
+require 'rubygems'
+require 'activesupport'
+require 'activeresource'
+ 
 # Ruby lib for working with the Lighthouse API's XML interface.  
 # The first thing you need to set is the account name.  This is the same
 # as the web address for your account.
@@ -29,7 +28,7 @@ module Lighthouse
   class << self
     attr_accessor :email, :password, :host_format, :domain_format, :protocol, :port
     attr_reader :account, :token
-
+ 
     # Sets the account name, and updates all the resources with the new domain.
     def account=(name)
       resources.each do |klass|
@@ -37,13 +36,13 @@ module Lighthouse
       end
       @account = name
     end
-
+ 
     # Sets up basic authentication credentials for all the resources.
     def authenticate(email, password)
       @email    = email
       @password = password
     end
-
+ 
     # Sets the API token for all the resources.
     def token=(value)
       resources.each do |klass|
@@ -51,7 +50,7 @@ module Lighthouse
       end
       @token = value
     end
-
+ 
     def resources
       @resources ||= []
     end
@@ -59,10 +58,10 @@ module Lighthouse
   
   self.host_format   = '%s://%s%s'
   self.domain_format = '%s.lighthouseapp.com'
-  self.protocol      = 'https'
+  self.protocol      = 'http'
   self.port          = ''
-
-  class Base < ActiveResource::Base
+ 
+  class LighthouseBase < ActiveResource::Base
     def self.inherited(base)
       Lighthouse.resources << base
       class << base
@@ -73,31 +72,82 @@ module Lighthouse
     end
   end
   
-  class Membership < Base
+  # Find projects
+  #
+  #   Lighthouse::Project.find(:all) # find all projects for the current account.
+  #   Lighthouse::Project.find(44)   # find individual project by ID
+  #
+  # Creating a Project
+  #
+  #   project = Lighthouse::Project.new(:name => 'Ninja Whammy Jammy')
+  #   project.save
+  #   # => true
+  #
+  # Updating a Project
+  #
+  #   project = Lighthouse::Project.find(44)
+  #   project.name = "Lighthouse Issues"
+  #   project.public = false
+  #   project.save
+  #
+  # Finding tickets
+  # 
+  #   project = Lighthouse::Project.find(44)
+  #   project.tickets
+  #
+  class LighthouseProject < LighthouseBase
+    def tickets(options = {})
+      Ticket.find(:all, :params => options.update(:project_id => id))
+    end
+  
+    def messages(options = {})
+      Message.find(:all, :params => options.update(:project_id => id))
+    end
+  
+    def milestones(options = {})
+      Milestone.find(:all, :params => options.update(:project_id => id))
+    end
+  
+    def bins(options = {})
+      Bin.find(:all, :params => options.update(:project_id => id))
+    end
+    
+    def changesets(options = {})
+      Changeset.find(:all, :params => options.update(:project_id => id))
+    end
+  end
+ 
+  class LighthouseUser < LighthouseBase
+    def memberships
+      Membership.find(:all, :params => {:user_id => id})
+    end
+  end
+  
+  class LighthouseMembership < LighthouseBase
     site_format << '/users/:user_id'
     def save
       raise Error, "Cannot modify Memberships from the API"
     end
   end
   
-  class Token < Base
+  class LighthouseToken < LighthouseBase
     def save
       raise Error, "Cannot modify Tokens from the API"
     end
   end
-
+ 
   # Find tickets
   #
-  #  Ticket.find(:all, :params => { :project_id => 44 })
-  #  Ticket.find(:all, :params => { :project_id => 44, :q => "state:closed tagged:committed" })
+  #  Lighthouse::Ticket.find(:all, :params => { :project_id => 44 })
+  #  Lighthouse::Ticket.find(:all, :params => { :project_id => 44, :q => "state:closed tagged:committed" })
   #
-  #  project = Project.find(44)
+  #  project = Lighthouse::Project.find(44)
   #  project.tickets
   #  project.tickets(:q => "state:closed tagged:committed")
   #
   # Creating a Ticket
   #
-  #  ticket = Ticket.new(:project_id => 44)
+  #  ticket = Lighthouse::Ticket.new(:project_id => 44)
   #  ticket.title = 'asdf'
   #  ...
   #  ticket.tags << 'ruby' << 'rails' << '@high'
@@ -105,25 +155,25 @@ module Lighthouse
   #
   # Updating a Ticket
   #
-  #  ticket = Ticket.find(20, :params => { :project_id => 44 })
+  #  ticket = Lighthouse::Ticket.find(20, :params => { :project_id => 44 })
   #  ticket.state = 'resolved'
   #  ticket.tags.delete '@high'
   #  ticket.save
   #
-  class Ticket < Base
+  class LighthouseTicket < LighthouseBase
     attr_writer :tags
     site_format << '/projects/:project_id'
-
+ 
     def id
       attributes['number'] ||= nil
       number
     end
-
+ 
     def tags
       attributes['tag'] ||= nil
       @tags ||= tag.blank? ? [] : parse_with_spaces(tag)
     end
-
+ 
     def save_with_tags
       self.tag = @tags.collect do |tag|
         tag.include?(' ') ? tag.inspect : tag
@@ -132,18 +182,18 @@ module Lighthouse
     end
     
     alias_method_chain :save, :tags
-
+ 
     private
       # taken from Lighthouse Tag code
       def parse_with_spaces(list)
         tags = []
-
+ 
         # first, pull out the quoted tags
         list.gsub!(/\"(.*?)\"\s*/ ) { tags << $1; "" }
         
         # then, get whatever's left
         tags.concat list.split(/\s/)
-
+ 
         cleanup_tags(tags)
       end
     
@@ -164,8 +214,25 @@ module Lighthouse
       end
   end
   
+  class LighthouseMessage < LighthouseBase
+    site_format << '/projects/:project_id'
+  end
+  
+  class LighthouseMilestone < LighthouseBase
+    site_format << '/projects/:project_id'
+  end
+  
+  class LighthouseBin < LighthouseBase
+    site_format << '/projects/:project_id'
+  end
+  
+  class LighthouseChangeset < LighthouseBase
+    site_format << '/projects/:project_id'
+  end
+  
+  class LighthouseChange < Array; end
 end
-
+ 
 module ActiveResource
   class Connection
     private
