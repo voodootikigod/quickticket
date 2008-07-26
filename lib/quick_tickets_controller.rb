@@ -23,13 +23,14 @@ class QuickTicketsController < ActionController::Base
       redirect_url = params[:url] unless params[:url] == "/create_ticket"
       Lighthouse.account = IterativeDesigns::QuickTicket.account
       Lighthouse.token   = IterativeDesigns::QuickTicket.token
-      ticket = Lighthouse::LighthouseTicket.new(:project_id => IterativeDesigns::QuickTicket.project, :title=>params[:title], :body=>body)
+      ticket = Lighthouse::Ticket.new(:project_id => IterativeDesigns::QuickTicket.project, :title=>params[:title], :body=>body)
       ticket.tags << "WebTicket"
       ticket.tags << params[:priority] if ["CRITICAL", "HIGH", "MEDIUM", "LOW", "NA"].include?(params[:priority])
       url = params[:url]
       controller = url.slice(1..((url.index("/", 1) || 0) - 1))
       ticket.tags << controller unless controller.blank?
       ticket.tags << "#{current_user.login}"
+      ticket.tags << RAILS_ENV
       if ticket.save
         flash[:notice]="Your ticket was successfully posted, we will try to fix it."
       else
