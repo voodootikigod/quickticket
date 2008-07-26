@@ -72,12 +72,21 @@ module IterativeDesigns # :nodoc:
     		<input type="hidden" name="url" value="#{request.request_uri}"/>
     		<h2>Create a ticket#{ " for "+site_name unless site_name.blank?}</h2>
     		<div id="lighthouse_ticket_title" class="field">
-    			<label>Title</label>
-    			<input type="text" id="lighthouse_ticket_title_field" name="title" />
+    			<label>Quick Description (less than 140 characters)</label>
+    			<input type="text" id="lighthouse_ticket_title_field"  maxsize="140" name="title" />
     		</div>
-		
+		    <div id="lighthouse_ticket_priority" class="field">
+    			<label class="inline">Priority</label>
+    			<select name="priority" id="lighthouse_ticket_priority_field">
+    			  <option value="CRITICAL">Critical</option>
+    			  <option value="HIGH">High</option>
+    			  <option value="MEDIUM" selected="selected">Medium</option>
+    			  <option value="LOW">Low</option>
+    			  <option value="NA">N/A</option>
+  			  </select>
+    		</div>
     		<div id="lighthouse_ticket_body" class="field">
-    			<label>Body</label>
+    			<label>What went wrong or what change would you like?</label>
     			<textarea name="body" id="lighthouse_ticket_body_field"></textarea>
     		</div>
     		<div id="submitting_ticket" style="display:none">
