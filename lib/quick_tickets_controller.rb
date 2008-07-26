@@ -28,8 +28,8 @@ class QuickTicketsController < ActionController::Base
       ticket.tags << params[:priority] if ["CRITICAL", "HIGH", "MEDIUM", "LOW", "NA"].include?(params[:priority])
       url = params[:url]
       controller = url.slice(1..((url.index("/", 1) || 0) - 1))
-      tickets.tags << controller unless controller.blank?
-      tickets.tags << "#{current_user.login}"
+      ticket.tags << controller unless controller.blank?
+      ticket.tags << "#{current_user.login}"
       if ticket.save
         flash[:notice]="Your ticket was successfully posted, we will try to fix it."
       else
