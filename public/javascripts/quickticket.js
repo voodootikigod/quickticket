@@ -38,11 +38,17 @@ var QuickTicket = {
 		}
 	},
 	submit:function(quick_ticket_form)	{
-		try	{
-			$(quick_ticket_form).ajaxSubmit({dataType: "script"});
+		if ($("#lighthouse_ticket_body_field").val() == "")	{
+			alert("You must provide some details about what went wrong so we can try to fix it.");
+		} else if ($("#lighthouse_ticket_title_field").val() == "") {
+			alert("How's about a quick description, something short but meaningful.. please?")
+		} else {
+			try	{
+				$(quick_ticket_form).ajaxSubmit({dataType: "script"});
 			
-		} catch (e)	{
-			alert(e);
+			} catch (e)	{
+				alert(e);
+			}
 		}
 		return false;
 	}, 

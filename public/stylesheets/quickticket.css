@@ -1,7 +1,19 @@
+div#bug_button a span	{display:none;}
 div#bug_button	{
 	position:fixed;
 	bottom:20px;
-	right:20px;
+	right:0px;
+	width: 22px;
+	height: 67px;
+}
+div#bug_button a span	{display:none;}
+div#bug_button a, div#bug_button a:visited	{
+	color:black;
+	text-decoration:none;
+	display:block;
+	width: 22px;
+	height: 67px;
+	background:black url('../images/feedback.png') top left no-repeat;
 }
 
 div#create_ticket_form .field	{ margin:8px 0px;}
