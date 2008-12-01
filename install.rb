@@ -10,6 +10,10 @@ css_path   = '/public/stylesheets/quickticket.css'
 css_target = File.dirname(__FILE__) + "/../../..#{css_path}"
 FileUtils.cp File.dirname(__FILE__) + css_path, css_target unless File.exist?(css_target)
 
+# Install image file
+image_path   = '/public/images/feedback.png'
+image_target = File.dirname(__FILE__) + "/../../..#{image_path}"
+FileUtils.cp File.dirname(__FILE__) + image_path, image_target unless File.exist?(image_target)
 
 #dump sample values into environment.rb
 
